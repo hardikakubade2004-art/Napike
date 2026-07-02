@@ -208,7 +208,7 @@ export default function Profile({ setCurrentTab }: ProfileProps) {
               </div>
             </div>
 
-            {/* Supabase Cloud Connection Status Badge */}
+            {/* Firebase Cloud Connection Status Badge */}
             <div className="bg-brand-cream border border-brand-beige rounded-2xl p-4 space-y-3 text-left">
               <div className="flex items-center justify-between">
                 <span className="text-[9px] uppercase font-bold tracking-wider text-brand-brown-light">Database Sync</span>
@@ -217,55 +217,23 @@ export default function Profile({ setCurrentTab }: ProfileProps) {
                     ? 'bg-emerald-50 text-emerald-700 border border-emerald-100' 
                     : 'bg-amber-50 text-amber-700 border border-amber-100'
                 }`}>
-                  {supabaseStatus === 'connected' ? 'Connected' : 'Offline Sandbox'}
+                  {supabaseStatus === 'connected' ? 'Connected (Firebase)' : 'Offline Sandbox'}
                 </span>
               </div>
               
               <div className="text-xs text-brand-brown/80 space-y-2">
                 {supabaseStatus === 'connected' ? (
                   <p>
-                    Your AI Studio app is actively integrated with your live Supabase database! 
-                    Accounts and orders are fully synchronized in real-time.
+                    Your AI Studio app is actively integrated with your live **Firebase Firestore** database! 
+                    User profiles and orders are fully synchronized in real-time.
                   </p>
                 ) : (
-                  <div className="space-y-2">
-                    <p>
-                      Connected to project <strong className="font-mono text-[10px]">eruuhixuxmdvsuroihih</strong>, but database tables are not yet set up in your Supabase console. Falling back gracefully to persistent local storage.
-                    </p>
-                    <button
-                      type="button"
-                      onClick={() => setShowSQL(!showSQL)}
-                      className="text-[10px] text-brand-sage-dark hover:text-brand-sage font-bold flex items-center gap-1 cursor-pointer transition-colors"
-                    >
-                      {showSQL ? 'Hide Setup Queries' : 'Show SQL to Setup Tables'}
-                    </button>
-                    
-                    {showSQL && (
-                      <div className="relative mt-2 p-2 bg-brand-charcoal text-white rounded-lg text-[9px] font-mono leading-relaxed space-y-1">
-                        <button
-                          type="button"
-                          onClick={() => {
-                            const sql = `-- Create User Profiles Table\ncreate table napike_users (\n  uid text primary key,\n  full_name text not null,\n  email text unique not null,\n  phone text,\n  joined_date text,\n  photo_url text,\n  password text\n);\n\n-- Create Orders Table\ncreate table napike_orders (\n  id text primary key,\n  date text not null,\n  items jsonb not null,\n  subtotal numeric not null,\n  discount numeric default 0,\n  shipping numeric default 0,\n  taxes numeric default 0,\n  total numeric not null,\n  status text not null,\n  delivery_address text,\n  city text,\n  state text,\n  postal_code text,\n  payment_method text,\n  user_email text not null\n);`;
-                            navigator.clipboard.writeText(sql);
-                            setIsCopied(true);
-                            setTimeout(() => setIsCopied(false), 2000);
-                          }}
-                          className="absolute right-1.5 top-1.5 bg-white/10 hover:bg-white/20 px-1.5 py-0.5 rounded text-[8px] text-white cursor-pointer"
-                        >
-                          {isCopied ? 'Copied!' : 'Copy SQL'}
-                        </button>
-                        <p className="text-brand-gold font-bold mb-1">// Run in Supabase SQL Editor</p>
-                        <p>-- Users Table</p>
-                        <p>create table napike_users (...);</p>
-                        <p>-- Orders Table</p>
-                        <p>create table napike_orders (...);</p>
-                      </div>
-                    )}
-                  </div>
+                  <p>
+                    Connected to Firebase project <strong className="font-mono text-[10px]">zesty-plating-lfht8</strong>, but offline fallback is active. Falling back gracefully to persistent local storage.
+                  </p>
                 )}
                 <div className="pt-1.5 border-t border-brand-beige/50 text-[10px] text-brand-brown-light flex justify-between">
-                  <span>ID: eruuhix...</span>
-                  <span>API Key: sb_pub...</span>
+                  <span>Firebase Project: zesty-plating-lfht8</span>
                 </div>
               </div>
             </div>

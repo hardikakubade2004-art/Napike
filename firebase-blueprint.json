@@ -1,0 +1,36 @@
+{
+  "collections": {
+    "napike_users": {
+      "description": "User profiles for Napike customers",
+      "fields": {
+        "uid": { "type": "string" },
+        "fullName": { "type": "string" },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "joinedDate": { "type": "string" },
+        "photoUrl": { "type": "string" },
+        "password": { "type": "string" }
+      }
+    },
+    "napike_orders": {
+      "description": "Orders placed by Napike customers",
+      "fields": {
+        "id": { "type": "string" },
+        "date": { "type": "string" },
+        "userEmail": { "type": "string" },
+        "items": { "type": "array" },
+        "subtotal": { "type": "number" },
+        "discount": { "type": "number" },
+        "shipping": { "type": "number" },
+        "taxes": { "type": "number" },
+        "total": { "type": "number" },
+        "status": { "type": "string" },
+        "deliveryAddress": { "type": "string" },
+        "city": { "type": "string" },
+        "state": { "type": "string" },
+        "postalCode": { "type": "string" },
+        "paymentMethod": { "type": "string" }
+      }
+    }
+  }
+}

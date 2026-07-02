@@ -8,7 +8,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { ShoppingBag, ChevronDown, ChevronUp, Clock, Truck, ShieldCheck, HelpCircle, Package, ArrowRight, Sparkles } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { Order } from '../types';
-import { dbGetOrders } from '../lib/supabase';
+import { dbGetOrders } from '../lib/firebase';
 
 interface MyOrdersProps {
   setCurrentTab: (tab: string) => void;
