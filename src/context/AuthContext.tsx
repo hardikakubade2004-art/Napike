@@ -8,10 +8,12 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Sparkles, LogIn, Mail, ShieldAlert, CheckCircle, Info, X } from 'lucide-react';
 import { User, Order } from '../types';
 import {
+  supabase,
   dbSaveUser,
   dbGetUser,
-  testFirebaseConnection
-} from '../lib/firebase';
+  testSupabaseConnection,
+  onSchemaError
+} from '../lib/supabase';
 
 // Custom Toast Interface
 export interface Toast {
@@ -97,13 +99,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
     }
 
-    // 3. Connect and seed Firebase
-    const initFirebase = async () => {
+    // Register schema error callback
+    onSchemaError(() => {
+      setSupabaseStatus('offline_fallback');
+    });
+
+    // 3. Connect and seed Supabase
+    const initSupabase = async () => {
       try {
-        const isConnected = await testFirebaseConnection();
+        const isConnected = await testSupabaseConnection();
         if (isConnected) {
           setSupabaseStatus('connected');
-          // Seed default user to Firebase
+          // Seed default user to Supabase
           const sUser = await dbGetUser(defaultUserEmail);
           if (!sUser) {
             await dbSaveUser(seededUserObj);
@@ -119,7 +126,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
     };
 
-    initFirebase();
+    initSupabase();
   }, []);
 
   // Toast notifications helpers

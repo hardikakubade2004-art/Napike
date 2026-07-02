@@ -8,7 +8,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { ShieldCheck, CreditCard, Landmark, Truck, Check, Sparkles, ArrowLeft, Heart, Award, Copy } from 'lucide-react';
 import { CartItem, Product, ColorOption, Order } from '../types';
 import { useAuth } from '../context/AuthContext';
-import { dbSaveOrder } from '../lib/firebase';
+import { dbSaveOrder } from '../lib/supabase';
 
 interface CheckoutProps {
   cart: CartItem[];
