@@ -1,0 +1,6 @@
+{
+  "name": "Napike Sustainable Gifting",
+  "description": "A premium sustainable e-commerce gifting platform offering beautiful handcrafted bouquets made from reusable cloth napkins.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-serif: "Playfair Display", Georgia, serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  --color-brand-cream: #FDFBF7;
+  --color-brand-beige: #F5EFEB;
+  --color-brand-gold: #D4AF37;
+  --color-brand-gold-dark: #AA7C11;
+  --color-brand-gold-light: #F4E8C1;
+  --color-brand-sage: #8A9A86;
+  --color-brand-sage-dark: #5C6E58;
+  --color-brand-sage-light: #DFE5DC;
+  --color-brand-brown: #6E5B4F;
+  --color-brand-brown-light: #BCA392;
+  --color-brand-charcoal: #2C2A29;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: var(--color-brand-cream);
+    color: var(--color-brand-charcoal);
+  }
+
+  /* Custom high-end scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-brand-cream);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #E6DFD5;
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-brand-sage);
+  }
+
+  ::selection {
+    background-color: var(--color-brand-sage-light);
+    color: var(--color-brand-charcoal);
+  }
+}
+
+/* Glassmorphism utility */
+.glass-panel {
+  background: rgba(253, 251, 247, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(212, 175, 55, 0.08);
+}
+
+.glass-panel-dark {
+  background: rgba(44, 42, 41, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(253, 251, 247, 0.05);
+}
+
+/* Custom fade animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Typography styles */
+.serif-display {
+  font-family: var(--font-serif);
+}
+
+.mono-display {
+  font-family: var(--font-mono);
+}
