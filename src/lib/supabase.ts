@@ -12,11 +12,28 @@ const SUPABASE_KEY = 'sb_publishable_cOg_C6Xkdt-RJMi1EJ19Pw_LcKrQwr_';
 export const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // Verification Helper: Checks if Supabase is connected
+type SchemaErrorCallback = () => void;
+let schemaErrorCallback: SchemaErrorCallback | null = null;
+
+export function onSchemaError(callback: SchemaErrorCallback) {
+  schemaErrorCallback = callback;
+}
+
+function triggerSchemaError(message: string) {
+  console.warn('Supabase Schema Error Detected:', message);
+  if (schemaErrorCallback) {
+    schemaErrorCallback();
+  }
+}
+
 export async function testSupabaseConnection(): Promise<boolean> {
   try {
     const { data, error } = await supabase.from('napike_users').select('count', { count: 'exact', head: true });
     if (error) {
       console.warn('Supabase test connection warning (table might not exist yet):', error.message);
+      if (error.message.includes('schema cache') || error.message.includes('does not exist')) {
+        triggerSchemaError(error.message);
+      }
       return false;
     }
     return true;
@@ -47,6 +64,9 @@ export async function dbSaveUser(user: User): Promise<boolean> {
 
     if (error) {
       console.error('Error saving user to Supabase:', error.message);
+      if (error.message.includes('schema cache') || error.message.includes('does not exist')) {
+        triggerSchemaError(error.message);
+      }
       return false;
     }
     return true;
@@ -65,7 +85,12 @@ export async function dbGetUser(email: string): Promise<User | null> {
       .single();
 
     if (error || !data) {
-      console.warn('Could not fetch user from Supabase:', error?.message || 'No data');
+      if (error) {
+        console.warn('Could not fetch user from Supabase:', error.message);
+        if (error.message.includes('schema cache') || error.message.includes('does not exist')) {
+          triggerSchemaError(error.message);
+        }
+      }
       return null;
     }
 
@@ -112,6 +137,9 @@ export async function dbSaveOrder(order: Order): Promise<boolean> {
 
     if (error) {
       console.error('Error saving order to Supabase:', error.message);
+      if (error.message.includes('schema cache') || error.message.includes('does not exist')) {
+        triggerSchemaError(error.message);
+      }
       return false;
     }
     return true;
@@ -129,7 +157,12 @@ export async function dbGetOrders(email: string): Promise<Order[] | null> {
       .eq('user_email', email.toLowerCase());
 
     if (error || !data) {
-      console.warn('Could not fetch orders from Supabase:', error?.message || 'No data');
+      if (error) {
+        console.warn('Could not fetch orders from Supabase:', error.message);
+        if (error.message.includes('schema cache') || error.message.includes('does not exist')) {
+          triggerSchemaError(error.message);
+        }
+      }
       return null;
     }
 

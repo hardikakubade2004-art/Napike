@@ -11,7 +11,8 @@ import {
   supabase,
   dbSaveUser,
   dbGetUser,
-  testSupabaseConnection
+  testSupabaseConnection,
+  onSchemaError
 } from '../lib/supabase';
 
 // Custom Toast Interface
@@ -97,6 +98,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         localStorage.removeItem('napike_current_user');
       }
     }
+
+    // Register schema error callback
+    onSchemaError(() => {
+      setSupabaseStatus('offline_fallback');
+    });
 
     // 3. Connect and seed Supabase
     const initSupabase = async () => {
